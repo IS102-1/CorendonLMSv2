@@ -1,5 +1,6 @@
 package corendonlmsv2.model;
 
+import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.DateUtil;
 
 /**
@@ -100,5 +101,43 @@ public class ActionLog implements IStorable
                 + "log_message) VALUES ('%s', '%s', '%s', '%s')",
                 TABLE.getDatabaseIdentifier(), userAccount.getUsername(),
                 userAccount.getUserRole(), dateTime, message);
+    }
+    
+    @Override
+    public boolean insert()
+    {
+        return DbManager.insert(this);
+    }
+    
+    /**
+     * Holds indices for the TABLE's columns
+     */
+    public class TableColumns
+    {
+
+        /**
+         * Index for the column log_id
+         */
+        public static final int LOG_ID = 0;
+
+        /**
+         * Index for the column username
+         */
+        public static final int USERNAME = 1;
+
+        /**
+         * Index for the column user_role
+         */
+        public static final int USER_ROLE = 2;
+        
+        /**
+         * Index for the column date_time
+         */
+        public static final int DATE_TIME = 3;
+        
+        /**
+         * Index for the column log_message
+         */
+        public static final int LOG_MESSAGE = 4;
     }
 }

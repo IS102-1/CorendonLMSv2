@@ -1,5 +1,6 @@
 package corendonlmsv2.model;
 
+import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.DateUtil;
 
 /**
@@ -136,6 +137,12 @@ public class Luggage implements IStorable
                 + "('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 TABLE.getDatabaseIdentifier(), brandName, color, customerId,
                 details, location, status, dateMissing);
+    }
+    
+    @Override
+    public boolean insert()
+    {
+        return DbManager.insert(this);
     }
     
     /**

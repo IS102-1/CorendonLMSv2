@@ -2,6 +2,8 @@ package corendonlmsv2.main;
 
 import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.MiscUtil;
+import corendonlmsv2.model.UserAccount;
+import corendonlmsv2.model.UserAccount.UserRoles;
 import corendonlmsv2.view.PanelViewer;
 import corendonlmsv2.view.panels.Login;
 import java.awt.Color;
@@ -39,7 +41,7 @@ public class CorendonLMSv2
     /**
      * Application's main frame default size
      */
-    public static final Dimension DEFAULT_SIZE = new Dimension(750, 750);
+    public static final Dimension DEFAULT_SIZE = new Dimension(750, 650);
 
     /**
      * Filename for the error log
@@ -56,7 +58,7 @@ public class CorendonLMSv2
      * Application's look and feel
      */
     public static final String LOOK_AND_FEEL = "Nimbus";
-    
+
     /**
      * Application's main frame
      */
@@ -71,20 +73,38 @@ public class CorendonLMSv2
         {
             setErrorStream(ERROR_LOG_FILENAME);
         }
-        
+
         System.out.println("Starting " + APPLICATION_NAME);
-        
+
         MiscUtil.setLookAndFeel(LOOK_AND_FEEL);
 
         DbManager.connect();
-        
-        SwingUtilities.invokeLater(new Runnable() {
+
+        insertAdminAccount();
+
+        SwingUtilities.invokeLater(new Runnable()
+        {
             @Override
             public void run()
             {
                 MAIN_FRAME.displayPanel(new Login());
             }
         });
+    }
+
+    /**
+     * Inserts an administrator account into the database. For debugging
+     * purposes during development only
+     */
+    private static void insertAdminAccount()
+    {
+        final String username = "admin", password = "admin";
+        final UserRoles role = UserRoles.ADMIN;
+
+        if (!UserAccount.isUsernameRegistered(username))
+        {
+            new UserAccount(username, password, role).insert();
+        }
     }
 
     /**

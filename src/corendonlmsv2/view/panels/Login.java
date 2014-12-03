@@ -8,6 +8,7 @@ package corendonlmsv2.view.panels;
 
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
+import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.model.UserAccount.UserRoles;
 import java.awt.Cursor;
@@ -57,8 +58,26 @@ public class Login extends JPanel implements ActionListener, MouseListener
             
             if (role != UserRoles.UNAUTHORIZED)
             {
+                new ActionLog(UserAccount.getCurrent(), "Signed in").insert();
+                
+                JPanel panel;
+                
+                if (role == UserRoles.DESK_EMPLOYEE)
+                {
+                    panel = new DeskHub();
+                } else if (role == UserRoles.MANAGER)
+                {
+                    panel = new ManagerHub();
+                } else if (role == UserRoles.ADMIN)
+                {
+                    panel = new AdminHub();
+                } else
+                {
+                    return;
+                }
+                
+                CorendonLMSv2.MAIN_FRAME.displayPanel(panel);
                 MiscUtil.showMessage("Signed in as " + UserAccount.getCurrent());
-                CorendonLMSv2.MAIN_FRAME.displayPanel(new Hub());
             } else
             {
                 MiscUtil.showMessage("The entered credentials are invalid.");

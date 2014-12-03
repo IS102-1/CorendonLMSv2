@@ -163,41 +163,47 @@ public class Customer implements IStorable
                 + "'%s', '%s')", TABLE.getDatabaseIdentifier(), name, address, 
                 country, emailAddress, phoneNumber);
     }
+    
+    @Override
+    public boolean insert()
+    {
+        return DbManager.insert(this);
+    }
 
     /**
      * Holds indices for the TABLE's columns
      */
-    private class TableColumns
+    public class TableColumns
     {
 
         /**
          * Index for the column customer_id
          */
-        private static final int CUSTOMER_ID = 0;
+        public static final int CUSTOMER_ID = 0;
 
         /**
          * Index for the column name
          */
-        private static final int NAME = 1;
+        public static final int NAME = 1;
 
         /**
          * Index for the column address
          */
-        private static final int ADDRESS = 2;
+        public static final int ADDRESS = 2;
 
         /**
          * Index for the column country
          */
-        private static final int COUNTRY = 3;
+        public static final int COUNTRY = 3;
 
         /**
          * Index for the column email_address
          */
-        private static final int EMAIL_ADDRESS = 4;
+        public static final int EMAIL_ADDRESS = 4;
 
         /**
          * Index for the column phone_number
          */
-        private static final int PHONE_NUMBER = 5;
+        public static final int PHONE_NUMBER = 5;
     }
 }

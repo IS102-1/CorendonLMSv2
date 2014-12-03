@@ -21,4 +21,12 @@ public interface IStorable
      * @return Update string to add this IStorable instance to the database
      */
     public String getUpdate();
+    
+    /**
+     * Inserts this object into the database by calling DbManager.insert
+     * 
+     * @return Boolean indicating whether the amount of rows in this database
+     * was succesfully incremented by 1 (one) throughout the execution of this
+     */
+    public boolean insert();
 }

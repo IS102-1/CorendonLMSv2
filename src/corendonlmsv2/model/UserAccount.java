@@ -5,6 +5,8 @@ import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.StringUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a user account. Encapsulates the username and the user's role
@@ -17,15 +19,17 @@ public class UserAccount implements IStorable
     /**
      * Database table to store objects of this type in
      */
-    private static final DatabaseTables TABLE = DatabaseTables.USERS;
+    public static final DatabaseTables TABLE = DatabaseTables.USERS;
 
     /**
      * UserAccount currently signed in
      */
     private static UserAccount _current;
-    
+
     private final String username, password;
     private final UserRoles userRole;
+
+    private String userId;
 
     /**
      * Initializes a new UserAccount instance
@@ -60,6 +64,48 @@ public class UserAccount implements IStorable
         this.password = hashPassword
                 ? StringUtil.hashString(password, true) : password;
         this.userRole = userRole;
+    }
+
+    /**
+     * Gets all the users in the database
+     *
+     * @return All users in the database
+     */
+    public static List<UserAccount> getAllUsers()
+    {
+        ResultSet results = DbManager.getResultSet(TABLE);
+        List<UserAccount> users = new ArrayList<>();
+
+        String userIdColumn = UserAccount.TABLE.getColumnAt(
+                UserAccount.TableColumns.USER_ID);
+        String usernameColumn = UserAccount.TABLE.getColumnAt(
+                UserAccount.TableColumns.USERNAME);
+        String passwordColumn = UserAccount.TABLE.getColumnAt(
+                UserAccount.TableColumns.PASSWORD);
+        String userRoleColumn = UserAccount.TABLE.getColumnAt(
+                UserAccount.TableColumns.USER_ROLE);
+
+        try
+        {
+            while (results.next())
+            {
+                UserRoles role = UserRoles.valueOf(
+                        results.getString(userRoleColumn).toUpperCase());
+                
+                UserAccount user = new UserAccount(
+                        results.getString(usernameColumn), 
+                        results.getString(passwordColumn), role, false);
+                
+                user.setUserId(results.getString(userIdColumn));
+                
+                users.add(user);
+            }
+        } catch (SQLException ex)
+        {
+            System.err.println("SQL exception: " + ex.getMessage());
+        }
+
+        return users;
     }
 
     /**
@@ -146,6 +192,26 @@ public class UserAccount implements IStorable
     }
 
     /**
+     * Gets the value of userId
+     *
+     * @return Value of userId
+     */
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    /**
+     * Sets the value of userId
+     *
+     * @param userId New value of userId
+     */
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
+
+    /**
      * Gets the value of username
      *
      * @return Value of username
@@ -178,6 +244,12 @@ public class UserAccount implements IStorable
     }
 
     @Override
+    public boolean insert()
+    {
+        return DbManager.insert(this);
+    }
+
+    @Override
     public String getUpdate()
     {
         //Check if username exists
@@ -186,7 +258,7 @@ public class UserAccount implements IStorable
             throw new IllegalArgumentException("The username is already"
                     + " registered to another user account.");
         }
-        
+
         return String.format("INSERT INTO %s (username, password, user_role) "
                 + "VALUES ('%s', '%s', '%s')", TABLE.getDatabaseIdentifier(),
                 username, password, userRole.getDatabaseIdentifier());
@@ -230,27 +302,27 @@ public class UserAccount implements IStorable
     /**
      * Holds indices for the TABLE's columns
      */
-    private class TableColumns
+    public class TableColumns
     {
 
         /**
          * Index for the column user_id
          */
-        private static final int USER_ID = 0;
+        public static final int USER_ID = 0;
 
         /**
          * Index for the column username
          */
-        private static final int USERNAME = 1;
+        public static final int USERNAME = 1;
 
         /**
          * Index for the column password
          */
-        private static final int PASSWORD = 2;
+        public static final int PASSWORD = 2;
 
         /**
          * Index for the column user_role
          */
-        private static final int USER_ROLE = 3;
+        public static final int USER_ROLE = 3;
     }
 }
