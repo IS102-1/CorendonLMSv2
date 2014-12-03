@@ -28,7 +28,7 @@ CREATE TABLE luggage(
 	details VARCHAR(100),
     location VARCHAR(75),
     status VARCHAR(25),
-    date_missing VARCHAR(25)
+    date_missing VARCHAR(11)
 );
 
 CREATE TABLE users(

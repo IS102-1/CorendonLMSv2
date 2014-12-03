@@ -49,7 +49,7 @@ public class Luggage implements IStorable
         this.status = status;
         
         this.dateMissing = (status == LuggageStatuses.MISSING) 
-                ? DateUtil.getDateString() : null;
+                ? DateUtil.getDateString() : "NULL";
     }
     
     /**
@@ -132,11 +132,10 @@ public class Luggage implements IStorable
     public String getUpdate()
     {
         return String.format("INSERT INTO %s (brand_name, color, customer_id,"
-                + " details, location, status, date) VALUES "
+                + " details, location, status, date_missing) VALUES "
                 + "('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 TABLE.getDatabaseIdentifier(), brandName, color, customerId,
-                details, location, status, 
-                dateMissing == null ? "" : dateMissing);
+                details, location, status, dateMissing);
     }
     
     /**

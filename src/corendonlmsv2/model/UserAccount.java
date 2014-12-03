@@ -39,7 +39,6 @@ public class UserAccount implements IStorable
      * already registered to another user account
      */
     public UserAccount(String username, String password, UserRoles userRole)
-            throws IllegalArgumentException
     {
         this(username, password, userRole, true);
     }
@@ -53,18 +52,10 @@ public class UserAccount implements IStorable
      * value is set
      * @param userRole User's role
      * @param hashPassword Indicates whether the password should be hashed
-     * @throws IllegalArgumentException Exception thrown if the username is
-     * already registered to another user account
      */
     public UserAccount(String username, String password, UserRoles userRole,
-            boolean hashPassword) throws IllegalArgumentException
+            boolean hashPassword)
     {
-        if (isUsernameRegistered(username))
-        {
-            throw new IllegalArgumentException("The username is already"
-                    + " registered to another user account.");
-        }
-
         this.username = username;
         this.password = hashPassword
                 ? StringUtil.hashString(password, true) : password;
@@ -189,6 +180,13 @@ public class UserAccount implements IStorable
     @Override
     public String getUpdate()
     {
+        //Check if username exists
+        if (isUsernameRegistered(username))
+        {
+            throw new IllegalArgumentException("The username is already"
+                    + " registered to another user account.");
+        }
+        
         return String.format("INSERT INTO %s (username, password, user_role) "
                 + "VALUES ('%s', '%s', '%s')", TABLE.getDatabaseIdentifier(),
                 username, password, userRole.getDatabaseIdentifier());

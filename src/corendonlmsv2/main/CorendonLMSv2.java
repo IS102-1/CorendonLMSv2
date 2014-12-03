@@ -1,18 +1,16 @@
 package corendonlmsv2.main;
 
 import corendonlmsv2.connectivity.DbManager;
-import corendonlmsv2.model.ActionLog;
-import corendonlmsv2.model.Customer;
-import corendonlmsv2.model.Luggage;
-import corendonlmsv2.model.Luggage.LuggageStatuses;
-import corendonlmsv2.model.UserAccount;
-import corendonlmsv2.model.UserAccount.UserRoles;
+import corendonlmsv2.main.util.MiscUtil;
+import corendonlmsv2.view.PanelViewer;
+import corendonlmsv2.view.panels.Login;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import javax.swing.SwingUtilities;
 
 /**
  * Defines the application's main entry point as well as constants used
@@ -41,7 +39,7 @@ public class CorendonLMSv2
     /**
      * Application's main frame default size
      */
-    public static final Dimension DEFAULT_SIZE = new Dimension(750, 600);
+    public static final Dimension DEFAULT_SIZE = new Dimension(750, 750);
 
     /**
      * Filename for the error log
@@ -58,6 +56,11 @@ public class CorendonLMSv2
      * Application's look and feel
      */
     public static final String LOOK_AND_FEEL = "Nimbus";
+    
+    /**
+     * Application's main frame
+     */
+    public static final PanelViewer MAIN_FRAME = new PanelViewer();
 
     /**
      * @param args the command line arguments
@@ -68,8 +71,20 @@ public class CorendonLMSv2
         {
             setErrorStream(ERROR_LOG_FILENAME);
         }
+        
+        System.out.println("Starting " + APPLICATION_NAME);
+        
+        MiscUtil.setLookAndFeel(LOOK_AND_FEEL);
 
         DbManager.connect();
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                MAIN_FRAME.displayPanel(new Login());
+            }
+        });
     }
 
     /**

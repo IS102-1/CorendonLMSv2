@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -21,7 +22,7 @@ public class PanelViewer extends JFrame
     /**
      * Path seperator for the current system
      */
-    private static final String PATH_SEPERATOR = File.separator;
+    public static final String PATH_SEPERATOR = File.separator;
     
     /**
      * File name for the logo to display on top of the frame
@@ -96,5 +97,17 @@ public class PanelViewer extends JFrame
         {
             setVisible(true);
         }
+    }
+    
+    private JPanel getDummyPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(CorendonLMSv2.DEFAULT_SIZE.width, 100));
+        
+        panel.add(new JButton("123"));
+        panel.add(new JButton("456"));
+        panel.add(new JButton("789"));
+        
+        return panel;
     }
 }
