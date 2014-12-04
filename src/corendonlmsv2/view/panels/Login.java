@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.main.CorendonLMSv2;
@@ -32,17 +26,21 @@ public class Login extends JPanel implements ActionListener, MouseListener
     {
         initComponents();
         
-        forgotLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
-        forgotLabel.addMouseListener(this);
-        signInButton.addActionListener(this);
-        
         setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
         
         jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel3.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         forgotLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        forgotLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        registerListeners();
+    }
+    
+    private void registerListeners()
+    {
+        forgotLabel.addMouseListener(this);
+        signInButton.addActionListener(this);
     }
     
     @Override

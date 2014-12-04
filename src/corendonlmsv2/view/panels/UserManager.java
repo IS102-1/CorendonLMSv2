@@ -87,7 +87,7 @@ public class UserManager extends JPanel implements ActionListener
     }
 
     /**
-     * Removes any entries in the table and reloads it with all current users
+     * Removes any entries from the table and reloads it with all current users
      */
     private void loadUsers()
     {
@@ -171,7 +171,7 @@ public class UserManager extends JPanel implements ActionListener
         {
             String update = String.format("DELETE FROM %s WHERE %s=%s",
                     UserAccount.TABLE.getDatabaseIdentifier(), userIdColumn,
-                    getSelectedUserId());
+                    selectedId);
 
             DbManager.executeUpdate(update);
 

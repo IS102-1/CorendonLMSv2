@@ -72,6 +72,8 @@ public class PanelViewer extends JFrame
                     public void windowClosing(WindowEvent event)
                     {
                         dispose();
+                        
+                        System.exit(0);
                     }
                 }
         );

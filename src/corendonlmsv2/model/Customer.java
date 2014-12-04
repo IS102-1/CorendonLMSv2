@@ -4,6 +4,9 @@ import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.StringUtil;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a customer and their contact details
@@ -16,9 +19,10 @@ public class Customer implements IStorable
     /**
      * Database table to store objects of this type in
      */
-    private static final DatabaseTables TABLE = DatabaseTables.CUSTOMERS;
+    public static final DatabaseTables TABLE = DatabaseTables.CUSTOMERS;
 
     private final String address, country, emailAddress, name, phoneNumber;
+    private String customerId;
 
     /**
      * Initializes a new Customer instance
@@ -32,19 +36,54 @@ public class Customer implements IStorable
      * already registered to another customer
      */
     public Customer(String address, String country, String emailAddress,
-            String name, String phoneNumber) throws IllegalArgumentException
+            String name, String phoneNumber)
     {
-        if (isPhoneNumberRegistered(phoneNumber))
-        {
-            throw new IllegalArgumentException("The phone number is already"
-                    + " registered to an existing customer.");
-        }
-        
         this.address = address;
         this.country = country;
         this.emailAddress = emailAddress;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets all customers in the database
+     *
+     * @return All customers in the database
+     */
+    public static List<Customer> getAllCustomers()
+    {
+        List<Customer> customers = new ArrayList<>();
+
+        ResultSet results = DbManager.getResultSet(TABLE);
+
+        String customerIdColumn = TABLE.getColumnAt(TableColumns.CUSTOMER_ID),
+                nameColumn = TABLE.getColumnAt(TableColumns.NAME),
+                addressColumn = TABLE.getColumnAt(TableColumns.ADDRESS),
+                countryColumn = TABLE.getColumnAt(TableColumns.COUNTRY),
+                emailColumn = TABLE.getColumnAt(TableColumns.EMAIL_ADDRESS),
+                phoneColumn = TABLE.getColumnAt(TableColumns.PHONE_NUMBER);
+
+        try
+        {
+            while (results.next())
+            {
+                Customer customer = new Customer(
+                        results.getString(addressColumn),
+                        results.getString(countryColumn),
+                        results.getString(emailColumn),
+                        results.getString(nameColumn),
+                        results.getString(phoneColumn)
+                );
+                customer.setCustomerId(results.getString(customerIdColumn));
+
+                customers.add(customer);
+            }
+        } catch (SQLException ex)
+        {
+            System.err.println("SQL exception: " + ex.getMessage());
+        }
+
+        return customers;
     }
 
     /**
@@ -120,6 +159,16 @@ public class Customer implements IStorable
     }
 
     /**
+     * Get the value of customerID
+     *
+     * @return the value of customerId
+     */
+    public String getCustomerId()
+    {
+        return customerId;
+    }
+
+    /**
      * Get the value of emailAddress
      *
      * @return the value of emailAddress
@@ -149,6 +198,16 @@ public class Customer implements IStorable
         return phoneNumber;
     }
 
+    /**
+     * Sets the value of customerId
+     *
+     * @param customerId new value of customerId
+     */
+    public void setCustomerId(String customerId)
+    {
+        this.customerId = customerId;
+    }
+
     @Override
     public DatabaseTables getTable()
     {
@@ -156,14 +215,20 @@ public class Customer implements IStorable
     }
 
     @Override
-    public String getUpdate()
+    public String getUpdate() throws IllegalArgumentException
     {
+        if (isPhoneNumberRegistered(phoneNumber))
+        {
+            throw new IllegalArgumentException("The phone number is already"
+                    + " registered to an existing customer.");
+        }
+
         return String.format("INSERT INTO %s (name, address, country, "
                 + "email_address, phone_number) VALUES ('%s', '%s', '%s', "
-                + "'%s', '%s')", TABLE.getDatabaseIdentifier(), name, address, 
+                + "'%s', '%s')", TABLE.getDatabaseIdentifier(), name, address,
                 country, emailAddress, phoneNumber);
     }
-    
+
     @Override
     public boolean insert()
     {

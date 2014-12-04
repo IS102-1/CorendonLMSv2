@@ -2,6 +2,7 @@ package corendonlmsv2.main;
 
 import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.MiscUtil;
+import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.model.UserAccount.UserRoles;
 import corendonlmsv2.view.PanelViewer;
@@ -73,7 +74,7 @@ public class CorendonLMSv2
         {
             setErrorStream(ERROR_LOG_FILENAME);
         }
-
+        
         System.out.println("Starting " + APPLICATION_NAME);
 
         MiscUtil.setLookAndFeel(LOOK_AND_FEEL);
@@ -134,14 +135,25 @@ public class CorendonLMSv2
                 @Override
                 public void run()
                 {
+                    UserAccount currentUser = UserAccount.getCurrent();
+                    
+                    if (currentUser != null)
+                    {
+                        //Someone was logged in and closed the application:
+                        //write a log to the database
+                        new ActionLog(currentUser, "Signed out").insert();
+                    }
+                    
                     try
                     {
+                        //Flush and close all streams
                         fileStream.flush();
                         errStream.flush();
 
                         fileStream.close();
                         errStream.close();
-
+                        
+                        //Close the connection to the database
                         DbManager.close();
                     } catch (IOException ex)
                     {

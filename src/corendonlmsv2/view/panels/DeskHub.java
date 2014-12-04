@@ -3,12 +3,10 @@ package corendonlmsv2.view.panels;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
-import corendonlmsv2.model.UserAccount.UserRoles;
 import corendonlmsv2.view.PanelViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -40,6 +38,8 @@ public class DeskHub extends JPanel implements ActionListener
     private void registerListeners()
     {
         signOutButton.addActionListener(this);
+        customersButton.addActionListener(this);
+        luggageButton.addActionListener(this);
     }
 
     @Override
@@ -56,8 +56,7 @@ public class DeskHub extends JPanel implements ActionListener
             panel = new Login();
         } else if (source == customersButton)
         {
-            //TODO
-            return;
+            panel = new CustomerManager(this);
         } else if (source == luggageButton)
         {
             //TODO

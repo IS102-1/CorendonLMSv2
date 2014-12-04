@@ -1,6 +1,7 @@
 package corendonlmsv2.main.util;
 
 import corendonlmsv2.main.CorendonLMSv2;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -75,11 +76,9 @@ public class MiscUtil
      */
     public static void showMessage(String message)
     {
-        JOptionPane.showMessageDialog(null, message,
-                CorendonLMSv2.APPLICATION_NAME,
-                JOptionPane.INFORMATION_MESSAGE);
+        showMessage(null, message);
     }
-
+    
     /**
      * Shows a message dialog to the user
      *
@@ -88,6 +87,31 @@ public class MiscUtil
      */
     public static void showMessage(Object message)
     {
-        showMessage(message.toString());
+        showMessage(null, message);
+    }
+    
+    /**
+     * Shows a message dialog to the user
+     *
+     * @param parent Parent component for the messagebox
+     * @param message The object for which the string representation is
+     * displayed, as specified in its toString implementation
+     */
+    public static void showMessage(Component parent, Object message)
+    {
+        showMessage(parent, message.toString());
+    }
+    
+    /**
+     * Shows a message dialog to the user
+     *
+     * @param parent Parent component for the messagebox
+     * @param message The string to display
+     */
+    public static void showMessage(Component parent, String message)
+    {
+        JOptionPane.showMessageDialog(parent, message,
+                CorendonLMSv2.APPLICATION_NAME,
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

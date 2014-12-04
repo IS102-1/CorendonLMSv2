@@ -76,14 +76,10 @@ public class UserAccount implements IStorable
         ResultSet results = DbManager.getResultSet(TABLE);
         List<UserAccount> users = new ArrayList<>();
 
-        String userIdColumn = UserAccount.TABLE.getColumnAt(
-                UserAccount.TableColumns.USER_ID);
-        String usernameColumn = UserAccount.TABLE.getColumnAt(
-                UserAccount.TableColumns.USERNAME);
-        String passwordColumn = UserAccount.TABLE.getColumnAt(
-                UserAccount.TableColumns.PASSWORD);
-        String userRoleColumn = UserAccount.TABLE.getColumnAt(
-                UserAccount.TableColumns.USER_ROLE);
+        String userIdColumn = TABLE.getColumnAt(TableColumns.USER_ID);
+        String usernameColumn = TABLE.getColumnAt(TableColumns.USERNAME);
+        String passwordColumn = TABLE.getColumnAt(TableColumns.PASSWORD);
+        String userRoleColumn = TABLE.getColumnAt(TableColumns.USER_ROLE);
 
         try
         {
