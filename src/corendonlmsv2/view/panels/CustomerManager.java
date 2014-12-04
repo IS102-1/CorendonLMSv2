@@ -53,7 +53,10 @@ public class CustomerManager
         loadCustomers();
         registerListeners();
     }
-
+    
+    /**
+     * Registers event listeners
+     */
     private void registerListeners()
     {
         backButton.addActionListener(this);
@@ -64,12 +67,22 @@ public class CustomerManager
         searchField.getDocument().addDocumentListener(this);
     }
 
+    /**
+     * Sets a filter for the table
+     */
     private void search()
     {
-        RowFilter<NonEditableTableModel, Object> filter
-                = RowFilter.regexFilter(searchField.getText());
+        try
+        {
+            //(?i) is for case-insensitivity
+            RowFilter<NonEditableTableModel, Object> filter
+                    = RowFilter.regexFilter("(?i)" + searchField.getText());
 
-        sorter.setRowFilter(filter);
+            sorter.setRowFilter(filter);    
+        } catch (Exception ex)
+        {
+            //Leave filter as it is
+        }
     }
 
     /**
@@ -244,10 +257,10 @@ public class CustomerManager
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(registerCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(147, 147, 147)
+                        .addComponent(registerCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(96, 96, 96)

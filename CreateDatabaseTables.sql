@@ -24,8 +24,8 @@ CREATE TABLE luggage(
 	luggage_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     brand_name VARCHAR(20),
 	color VARCHAR(25),
-	customer_id VARCHAR(11) NOT NULL,
-	details VARCHAR(100),
+	customer_id VARCHAR(11),
+	details VARCHAR(200),
     location VARCHAR(75),
     status VARCHAR(25),
     date_missing VARCHAR(11)

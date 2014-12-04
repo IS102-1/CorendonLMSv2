@@ -59,8 +59,7 @@ public class DeskHub extends JPanel implements ActionListener
             panel = new CustomerManager(this);
         } else if (source == luggageButton)
         {
-            //TODO
-            return;
+            panel = new LuggageManager(this);
         } else
         {
             return;
