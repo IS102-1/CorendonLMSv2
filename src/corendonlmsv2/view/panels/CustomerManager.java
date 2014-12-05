@@ -8,6 +8,7 @@ import corendonlmsv2.model.Customer;
 import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.view.NonEditableTableModel;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -44,6 +45,8 @@ public class CustomerManager
 
         jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
 
         model = (NonEditableTableModel) customerTable.getModel();
@@ -229,6 +232,7 @@ public class CustomerManager
         editButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
+        refreshLabel = new javax.swing.JLabel();
 
         customerTable.setModel(new NonEditableTableModel(DatabaseTables.CUSTOMERS.getColumns(), 0));
         jScrollPane1.setViewportView(customerTable);
@@ -249,6 +253,16 @@ public class CustomerManager
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Search:");
 
+        refreshLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        refreshLabel.setText("Refresh");
+        refreshLabel.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                refreshLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -261,13 +275,15 @@ public class CustomerManager
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(147, 147, 147)
-                        .addComponent(registerCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addGap(157, 157, 157)
+                        .addComponent(registerCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(refreshLabel)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
-                        .addGap(96, 96, 96)
+                        .addGap(34, 34, 34)
                         .addComponent(registerLuggageButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -291,10 +307,16 @@ public class CustomerManager
                     .addComponent(registerLuggageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshLabel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_refreshLabelMouseClicked
+    {//GEN-HEADEREND:event_refreshLabelMouseClicked
+        loadCustomers();
+    }//GEN-LAST:event_refreshLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -305,6 +327,7 @@ public class CustomerManager
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel refreshLabel;
     private javax.swing.JButton registerCustomerButton;
     private javax.swing.JButton registerLuggageButton;
     private javax.swing.JTextField searchField;

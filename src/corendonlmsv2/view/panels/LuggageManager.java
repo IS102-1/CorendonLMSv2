@@ -13,6 +13,7 @@ import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.Luggage;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.view.NonEditableTableModel;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -50,6 +51,8 @@ public class LuggageManager
 
         jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
 
         model = (NonEditableTableModel) luggageTable.getModel();
@@ -249,6 +252,7 @@ public class LuggageManager
         deleteButton = new javax.swing.JButton();
         generatePdfButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        refreshLabel = new javax.swing.JLabel();
 
         backButton.setText("Back");
 
@@ -271,6 +275,16 @@ public class LuggageManager
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Modify selected:");
 
+        refreshLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        refreshLabel.setText("Refresh");
+        refreshLabel.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                refreshLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -280,8 +294,10 @@ public class LuggageManager
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(refreshLabel)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addGap(108, 108, 108)
+                        .addGap(46, 46, 46)
                         .addComponent(generatePdfButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -293,10 +309,10 @@ public class LuggageManager
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(263, 263, 263)
+                        .addGap(273, 273, 273)
                         .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                        .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -316,10 +332,16 @@ public class LuggageManager
                     .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(generatePdfButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(refreshLabel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_refreshLabelMouseClicked
+    {//GEN-HEADEREND:event_refreshLabelMouseClicked
+        loadLuggage();
+    }//GEN-LAST:event_refreshLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,6 +354,7 @@ public class LuggageManager
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable luggageTable;
+    private javax.swing.JLabel refreshLabel;
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables

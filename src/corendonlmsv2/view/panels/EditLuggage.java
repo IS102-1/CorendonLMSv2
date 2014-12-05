@@ -165,9 +165,15 @@ public class EditLuggage extends JFrame implements ActionListener
         
         try
         {
-            success = new Luggage(brandInput, colorInput, id, 
-                    detailsInput, locationInput, 
-                    (LuggageStatuses) statusComboBox.getSelectedItem()).insert();
+            Luggage luggage = new Luggage(brandInput, colorInput, id, 
+                    detailsInput, locationInput, newStatus);
+            
+            if (newStatus == LuggageStatuses.MISSING)
+            {
+                luggage.setDateMissing(DateUtil.getDateString());
+            }
+            
+            success = luggage.insert();
             
         } catch (IllegalArgumentException ex)
         {
