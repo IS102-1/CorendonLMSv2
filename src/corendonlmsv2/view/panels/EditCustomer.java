@@ -16,6 +16,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
+ * Simple dialog for adding new customers or editing existing entries
  *
  * @author Emile Pels
  */
@@ -61,6 +62,7 @@ public class EditCustomer
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setAlwaysOnTop(true);
 
         loadExistingCustomer();
         registerListeners();
@@ -243,7 +245,6 @@ public class EditCustomer
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
 
         cancelButton.setText("Cancel");
 

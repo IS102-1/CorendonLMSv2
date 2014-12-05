@@ -16,6 +16,7 @@ import corendonlmsv2.view.NonEditableTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -185,13 +186,27 @@ public class LuggageManager
             }
         } else if (source == editButton)
         {
-
+            String selectedId = getSelectedLuggageId();
+            if (selectedId != null)
+            {
+                new EditLuggage(selectedId, true).setVisible(true);
+            }
         } else if (source == generatePdfButton)
         {
 
         } else if (source == registerButton)
         {
-
+            int result = JOptionPane.showConfirmDialog(this, "Would you like to"
+                    + " add luggage to a customer's record?\nPress no if the"
+                    + " luggage's owner is unknown.");
+            
+            if (result == JOptionPane.YES_OPTION)
+            {
+                CorendonLMSv2.MAIN_FRAME.displayPanel(new CustomerManager(this));
+            } else if (result == JOptionPane.NO_OPTION)
+            {
+                new EditLuggage().setVisible(true);
+            }
         }
     }
 

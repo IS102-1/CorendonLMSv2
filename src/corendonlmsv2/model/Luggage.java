@@ -80,6 +80,7 @@ public class Luggage implements IStorable
                                 results.getString(statusColumn).toUpperCase())
                 );
                 luggage.setLuggageId(results.getString(luggageIdColumn));
+                luggage.setDateMissing(results.getString(dateMissingColumn));
 
                 allLuggage.add(luggage);
             }
@@ -173,14 +174,14 @@ public class Luggage implements IStorable
 
     /**
      * Sets the value of dateMissing
-     * 
+     *
      * @param dateMissing new value for dateMissing
      */
     public void setDateMissing(String dateMissing)
     {
         this.dateMissing = dateMissing;
     }
-    
+
     /**
      * Sets the value of luggageId
      *
@@ -200,11 +201,11 @@ public class Luggage implements IStorable
     @Override
     public String getUpdate() throws IllegalArgumentException
     {
-        if (!Customer.isCustomerIdRegistered(customerId) || customerId == null)
-        {
-            throw new IllegalArgumentException("The customer ID is not"
-                    + " registered to a customer or is invalid.");
-        }
+//        if (!Customer.isCustomerIdRegistered(customerId) || customerId == null)
+//        {
+//            throw new IllegalArgumentException("The customer ID is not"
+//                    + " registered to a customer or is invalid.");
+//        }
 
         return String.format("INSERT INTO %s (brand_name, color, customer_id,"
                 + " details, location, status, date_missing) VALUES "
@@ -236,6 +237,11 @@ public class Luggage implements IStorable
     {
 
         /**
+         * Luggage was signed in under normal circumstances and has not been
+         * lost to date
+         */
+        NORMAL,
+        /**
          * Luggage is reported missing by the customer; the location of this
          * piece of luggage is unknown
          */
@@ -247,12 +253,7 @@ public class Luggage implements IStorable
         /**
          * Luggage was missing or has been found, but the case is now resolved
          */
-        RESOLVED,
-        /**
-         * Luggage was signed in under normal circumstances and has not been
-         * lost to date
-         */
-        NORMAL;
+        RESOLVED;
 
         public String getDatabaseIdentifier()
         {

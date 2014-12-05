@@ -180,7 +180,11 @@ public class CustomerManager
             new EditCustomer().setVisible(true);
         }  else if (source == registerLuggageButton)
         {
-            //TODO
+            String customerId = getSelectedCustomerId();
+            if (customerId != null)
+            {
+                new EditLuggage(customerId, false).setVisible(true);
+            }
         }  else if (source == deleteButton)
         {
             deleteSelected();
