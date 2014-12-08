@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.main.CorendonLMSv2;
+import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.view.PanelViewer;
@@ -91,7 +92,7 @@ public class AdminHub extends JPanel implements ActionListener
         logsButton.setBackground(new java.awt.Color(150, 40, 40));
         logsButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         logsButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        logsButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "Logs.png"));
+        logsButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "Logs.png"));
         logsButton.setText("View logs");
         logsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         logsButton.setIconTextGap(10);
@@ -100,7 +101,7 @@ public class AdminHub extends JPanel implements ActionListener
         usersButton.setBackground(new java.awt.Color(150, 40, 40));
         usersButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         usersButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        usersButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "User.png"));
+        usersButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "User.png"));
         usersButton.setText("Manage users");
         usersButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         usersButton.setIconTextGap(10);

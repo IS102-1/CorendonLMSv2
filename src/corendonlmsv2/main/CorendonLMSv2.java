@@ -3,8 +3,6 @@ package corendonlmsv2.main;
 import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.model.ActionLog;
-import corendonlmsv2.model.DatabaseTables;
-import corendonlmsv2.model.Luggage;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.model.UserAccount.UserRoles;
 import corendonlmsv2.view.PanelViewer;
@@ -15,8 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.SwingUtilities;
 
 /**
@@ -86,7 +82,7 @@ public class CorendonLMSv2
         DbManager.connect();
 
         insertAdminAccount();
-
+        
         SwingUtilities.invokeLater(new Runnable()
         {
             @Override

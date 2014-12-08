@@ -1,12 +1,12 @@
 package corendonlmsv2.view;
 
 import corendonlmsv2.main.CorendonLMSv2;
+import corendonlmsv2.main.util.StringUtil;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,16 +20,12 @@ public class PanelViewer extends JFrame
 {
 
     /**
-     * Path seperator for the current system
-     */
-    public static final String PATH_SEPERATOR = File.separator;
-    
-    /**
      * File name for the logo to display on top of the frame
      */
-    private static final String LOGO_FILENAME = "resources" + PATH_SEPERATOR
-            + "CorendonLogo.png";
-    
+    private static final String LOGO_FILENAME = String.format("resources%sCorendonLogo.png", StringUtil.PATH_SEPERATOR);
+//"resources" 
+            //+ StringUtil.PATH_SEPERATOR + "CorendonLogo.png";
+
     /**
      * ImageLabel to display on top of the frame
      */
@@ -72,7 +68,7 @@ public class PanelViewer extends JFrame
                     public void windowClosing(WindowEvent event)
                     {
                         dispose();
-                        
+
                         System.exit(0);
                     }
                 }
@@ -100,16 +96,16 @@ public class PanelViewer extends JFrame
             setVisible(true);
         }
     }
-    
+
     private JPanel getDummyPanel()
     {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(CorendonLMSv2.DEFAULT_SIZE.width, 100));
-        
+
         panel.add(new JButton("123"));
         panel.add(new JButton("456"));
         panel.add(new JButton("789"));
-        
+
         return panel;
     }
 }

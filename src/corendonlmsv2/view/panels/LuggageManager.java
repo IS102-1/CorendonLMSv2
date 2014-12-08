@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
+import corendonlmsv2.main.util.PdfUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.Luggage;
@@ -16,6 +12,7 @@ import corendonlmsv2.view.NonEditableTableModel;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -196,7 +193,25 @@ public class LuggageManager
             }
         } else if (source == generatePdfButton)
         {
-
+            String selectedId = getSelectedLuggageId();
+            if (selectedId != null)
+            {
+                String result;
+                
+                try
+                {
+                    result = PdfUtil.generatePdf(selectedId);
+                } catch (IOException ex)
+                {
+                    MiscUtil.showMessage("PDF could not be generated.\n\n" 
+                            + ex.getMessage());
+                    return;
+                }
+                
+                new ActionLog(UserAccount.getCurrent(), "Generated report for"
+                        + " luggage " + selectedId).insert();
+                PdfUtil.launchPdf(result);
+            }
         } else if (source == registerButton)
         {
             int result = JOptionPane.showConfirmDialog(this, "Would you like to"

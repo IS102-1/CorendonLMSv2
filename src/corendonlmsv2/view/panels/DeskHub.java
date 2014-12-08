@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.main.CorendonLMSv2;
+import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.view.PanelViewer;
@@ -91,7 +92,7 @@ public class DeskHub extends JPanel implements ActionListener
         customersButton.setBackground(new java.awt.Color(150, 40, 40));
         customersButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         customersButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        customersButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "Customer.png"));
+        customersButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "Customer.png"));
         customersButton.setText("Manage customers");
         customersButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         customersButton.setIconTextGap(10);
@@ -100,7 +101,7 @@ public class DeskHub extends JPanel implements ActionListener
         luggageButton.setBackground(new java.awt.Color(150, 40, 40));
         luggageButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         luggageButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        luggageButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "Luggage.png"));
+        luggageButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "Luggage.png"));
         luggageButton.setText("Manage luggage");
         luggageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         luggageButton.setIconTextGap(10);

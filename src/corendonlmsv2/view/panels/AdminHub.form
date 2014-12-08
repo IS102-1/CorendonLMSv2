@@ -78,7 +78,7 @@
           <Connection code="CorendonLMSv2.DEFAULT_FORECOLOR" type="code"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;resources&quot; + PanelViewer.PATH_SEPERATOR + &quot;Logs.png&quot;)" type="code"/>
+          <Connection code="new ImageIcon(&quot;resources&quot; + StringUtil.PATH_SEPERATOR + &quot;Logs.png&quot;)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="View logs"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -98,7 +98,7 @@
           <Connection code="CorendonLMSv2.DEFAULT_FORECOLOR" type="code"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;resources&quot; + PanelViewer.PATH_SEPERATOR + &quot;User.png&quot;)" type="code"/>
+          <Connection code="new ImageIcon(&quot;resources&quot; + StringUtil.PATH_SEPERATOR + &quot;User.png&quot;)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Manage users"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>

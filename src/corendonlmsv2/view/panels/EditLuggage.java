@@ -218,7 +218,9 @@ public class EditLuggage extends JFrame implements ActionListener
                 {
                     //Luggage must have been found
                     MiscUtil.showMessage(this,
-                            "No customer ID available to add luggage to!");
+                            "No customer ID available to add luggage to!\nMake"
+                                    + " sure you selected \"FOUND\""
+                                    + " for the status.");
                     return;
                 }
 

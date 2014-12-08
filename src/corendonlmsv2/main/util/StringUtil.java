@@ -1,5 +1,6 @@
 package corendonlmsv2.main.util;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,11 @@ import java.util.regex.Pattern;
  */
 public class StringUtil
 {
+
+    /**
+     * Path seperator for the current system
+     */
+    public static final String PATH_SEPERATOR = File.separator;
 
     //Algorithm to use for the password hashing
     private static final String ALGORITHM = "MD5";
@@ -117,7 +123,7 @@ public class StringUtil
      * @param quote Indicates whether the values should be enclosed by quotes
      * @return Joined string with all values seperated by the seperator
      */
-    public static String joinString(String seperator, 
+    public static String joinString(String seperator,
             Object[] values, boolean quote)
     {
         if (values.length == 0 || isStringNullOrWhiteSpace(seperator))
@@ -151,7 +157,7 @@ public class StringUtil
      * @param quote Indicates whether the values should be enclosed by quotes
      * @return Joined string with all values seperated by the seperator
      */
-    public static String joinString(String seperator, 
+    public static String joinString(String seperator,
             String[] values, boolean quote)
     {
         if (values.length == 0 || isStringNullOrWhiteSpace(seperator))

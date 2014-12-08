@@ -78,7 +78,7 @@
           <Connection code="CorendonLMSv2.DEFAULT_FORECOLOR" type="code"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;resources&quot; + PanelViewer.PATH_SEPERATOR + &quot;Customer.png&quot;)" type="code"/>
+          <Connection code="new ImageIcon(&quot;resources&quot; + StringUtil.PATH_SEPERATOR + &quot;Customer.png&quot;)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Manage customers"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -98,7 +98,7 @@
           <Connection code="CorendonLMSv2.DEFAULT_FORECOLOR" type="code"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;resources&quot; + PanelViewer.PATH_SEPERATOR + &quot;Luggage.png&quot;)" type="code"/>
+          <Connection code="new ImageIcon(&quot;resources&quot; + StringUtil.PATH_SEPERATOR + &quot;Luggage.png&quot;)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Manage luggage"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>

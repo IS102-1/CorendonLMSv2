@@ -7,9 +7,9 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.main.CorendonLMSv2;
+import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
-import corendonlmsv2.view.PanelViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -98,7 +98,7 @@ public class ManagerHub extends JPanel implements ActionListener
         logsButton.setBackground(new java.awt.Color(150, 40, 40));
         logsButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         logsButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        logsButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "Logs.png"));
+        logsButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "Logs.png"));
         logsButton.setText("View logs");
         logsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         logsButton.setIconTextGap(10);
@@ -107,7 +107,7 @@ public class ManagerHub extends JPanel implements ActionListener
         graphsButton.setBackground(new java.awt.Color(150, 40, 40));
         graphsButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         graphsButton.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        graphsButton.setIcon(new ImageIcon("resources" + PanelViewer.PATH_SEPERATOR + "Graph.png"));
+        graphsButton.setIcon(new ImageIcon("resources" + StringUtil.PATH_SEPERATOR + "Graph.png"));
         graphsButton.setText("View graphs");
         graphsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         graphsButton.setIconTextGap(10);
