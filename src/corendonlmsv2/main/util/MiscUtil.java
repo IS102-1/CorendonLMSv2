@@ -19,7 +19,7 @@ public class MiscUtil
     private MiscUtil()
     {
     }
-
+    
     /**
      * Determines whether a result set contains no values
      *
