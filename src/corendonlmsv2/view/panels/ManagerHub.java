@@ -162,6 +162,7 @@ public class ManagerHub extends JPanel implements ActionListener
 
     private void graphsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphsButtonActionPerformed
 
+        
        DefaultPieDataset pieDataset = new DefaultPieDataset();
        pieDataset.setValue("Normal", new Integer(10));
        pieDataset.setValue("Found", new Integer(20));
