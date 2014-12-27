@@ -90,7 +90,10 @@ public class CorendonLMSv2
             {
                 MAIN_FRAME.displayPanel(new Login());
             }
+            
         });
+        
+        
     }
 
     /**
@@ -102,9 +105,9 @@ public class CorendonLMSv2
         final String username = "admin", password = "admin";
         final UserRoles role = UserRoles.ADMIN;
 
-        if (!UserAccount.isUsernameRegistered(username))
+        if (!   UserAccount.isUsernameRegistered(username))
         {
-            new UserAccount(username, password, role).insert();
+            new UserAccount(username, password, role, true).insert();
         }
     }
 

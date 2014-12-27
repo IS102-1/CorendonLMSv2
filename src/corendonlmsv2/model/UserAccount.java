@@ -42,8 +42,7 @@ public class UserAccount implements IStorable
      * @throws IllegalArgumentException Exception thrown if the username is
      * already registered to another user account
      */
-    public UserAccount(String username, String password, UserRoles userRole)
-    {
+    public UserAccount(String username, String password, UserRoles userRole){
         this(username, password, userRole, true);
     }
 
@@ -142,9 +141,10 @@ public class UserAccount implements IStorable
         //Get the rows in TABLE where the username matches (absolute)
         ResultSet results = DbManager.getResultSet(TABLE, username,
                 TABLE.getColumnAt(TableColumns.USERNAME), true);
-
+        
+        
         //Hash the candidate password for comparison
-        UserRoles role = UserRoles.UNAUTHORIZED;
+        UserRoles role = UserRoles.MANAGER;
 
         try
         {

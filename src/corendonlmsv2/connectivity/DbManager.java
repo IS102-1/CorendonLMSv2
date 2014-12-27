@@ -21,7 +21,7 @@ public class DbManager
     /**
      * Password for the database connection
      */
-    private static final String DATABASE_PASSWORD = "emilepels";
+    private static final String DATABASE_PASSWORD = "";
 
     /**
      * URL for the database connection
@@ -42,6 +42,8 @@ public class DbManager
      * Resembles the current database connection
      */
     private static Connection _dbConnection;
+    
+
 
     private DbManager()
     {

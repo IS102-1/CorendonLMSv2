@@ -6,14 +6,25 @@
 
 package corendonlmsv2.view.panels;
 
+import corendonlmsv2.connectivity.DbManager;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
+import corendonlmsv2.model.Customer;
+import static corendonlmsv2.model.Customer.TABLE;
+import corendonlmsv2.model.Luggage;
+import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.UserAccount;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -82,8 +93,7 @@ public class ManagerHub extends JPanel implements ActionListener
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         welcomeLabel = new javax.swing.JLabel();
         signOutButton = new javax.swing.JButton();
@@ -112,6 +122,11 @@ public class ManagerHub extends JPanel implements ActionListener
         graphsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         graphsButton.setIconTextGap(10);
         graphsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        graphsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                graphsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -145,6 +160,25 @@ public class ManagerHub extends JPanel implements ActionListener
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void graphsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphsButtonActionPerformed
+
+       DefaultPieDataset pieDataset = new DefaultPieDataset();
+       pieDataset.setValue("Normal", new Integer(10));
+       pieDataset.setValue("Found", new Integer(20));
+       pieDataset.setValue("Missing", new Integer(30));
+       pieDataset.setValue("Resolved", new Integer(40));
+       JFreeChart chart = ChartFactory.createPieChart3D("Luggage", pieDataset, true, true, true);
+       
+       PiePlot3D p = (PiePlot3D)chart.getPlot();
+       ChartFrame frame = new ChartFrame("Luggage", chart);
+       frame.setSize(800, 500);
+       frame.setLocationRelativeTo(null);
+       frame.setVisible(true);
+       
+       
+       
+    }//GEN-LAST:event_graphsButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton graphsButton;
@@ -153,3 +187,5 @@ public class ManagerHub extends JPanel implements ActionListener
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
+
+
