@@ -1,10 +1,10 @@
 package corendonlmsv2.view.panels;
 
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
-import corendonlmsv2.view.PanelViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -29,6 +29,13 @@ public class DeskHub extends JPanel implements ActionListener
         welcomeLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         welcomeLabel.setText(String.format("Welcome back, %s! What would you"
                 + " like to do?", UserAccount.getCurrent()));
+        
+        welcomeLabel.setText(String.format(LanguageController.getString(
+                "welcomeBack"), UserAccount.getCurrent()));
+
+        signOutButton.setText(LanguageController.getString("signOut"));
+        customersButton.setText(LanguageController.getString("manageCustomers"));
+        luggageButton.setText(LanguageController.getString("manageLuggage"));
 
         registerListeners();
     }

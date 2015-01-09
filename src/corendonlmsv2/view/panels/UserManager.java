@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.StringUtil;
@@ -51,15 +52,7 @@ public class UserManager extends JPanel implements ActionListener
 
         this.parent = parent;
         initComponents();
-
-        jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel3.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel4.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel5.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel6.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel8.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
+        setComponentProperties();
 
         model = (NonEditableTableModel) userTable.getModel();
 
@@ -72,6 +65,41 @@ public class UserManager extends JPanel implements ActionListener
         loadUsers();
 
         registerListeners();
+    }
+    
+    /**
+     * Sets the components' properties
+     */
+    private void setComponentProperties()
+    {
+        jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel1.setText(LanguageController.getString("existingUsers"));
+        
+        jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel2.setText(LanguageController.getString("registerUser"));
+        
+        jLabel3.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel3.setText(LanguageController.getString("username"));
+        
+        jLabel4.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel4.setText(LanguageController.getString("password"));
+        
+        jLabel5.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel5.setText(LanguageController.getString("repeatPassword"));
+        
+        jLabel6.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel6.setText(LanguageController.getString("userRole"));
+        
+        jLabel8.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel8.setText(LanguageController.getString("modifySelected"));
+        
+        registerButton.setText(LanguageController.getString("register"));
+        backButton.setText(LanguageController.getString("back"));
+        deleteButton.setText(LanguageController.getString("delete"));
+        editPasswordButton.setText(LanguageController.getString("editPassword"));
+        editRoleButton.setText(LanguageController.getString("editRole"));
+        
+        setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
     }
 
     /**
@@ -125,8 +153,7 @@ public class UserManager extends JPanel implements ActionListener
 
         if (selectedRow == -1)
         {
-            MiscUtil.showMessage("Please select a valid user account before "
-                    + "proceeding.");
+            MiscUtil.showMessage(LanguageController.getString("selectAccount"));
             return null;
         }
 
@@ -179,7 +206,7 @@ public class UserManager extends JPanel implements ActionListener
                     "Deleted user no. " + selectedId).insert();
             
             loadUsers();
-            MiscUtil.showMessage("The user account has been deleted.");
+            MiscUtil.showMessage(LanguageController.getString("accountDeleted"));
         }
     }
 
@@ -200,13 +227,13 @@ public class UserManager extends JPanel implements ActionListener
 
         if (selectedId != null)
         {
-            String firstEntry = JOptionPane.showInputDialog("What would you "
-                    + "like to change your password to?");
+            String firstEntry = JOptionPane.showInputDialog(
+                        LanguageController.getString("passwordChange"));
 
             if (!StringUtil.isStringNullOrWhiteSpace(firstEntry))
             {
-                String secondEntry = JOptionPane.showInputDialog("Please "
-                        + "confirm your password by retyping it.");
+                String secondEntry = JOptionPane.showInputDialog(
+                        LanguageController.getString("passwordChangeRepeat"));
 
                 if (firstEntry.equals(secondEntry))
                 {
@@ -224,15 +251,17 @@ public class UserManager extends JPanel implements ActionListener
                     new ActionLog(UserAccount.getCurrent(), "Edited password "
                             + "for user no. " + selectedId).insert();
 
-                    MiscUtil.showMessage("The password has succesfully been"
-                            + " changed!");
+                    MiscUtil.showMessage(
+                        LanguageController.getString("passwordChanged"));
                 } else
                 {
-                    MiscUtil.showMessage("The entered passwords do not match.");
+                    MiscUtil.showMessage(
+                        LanguageController.getString("passwordNoMatch"));
                 }
             } else
             {
-                MiscUtil.showMessage("Password can not be empty.");
+                MiscUtil.showMessage(
+                        LanguageController.getString("inputInvalid"));
             }
         }
     }
@@ -254,7 +283,7 @@ public class UserManager extends JPanel implements ActionListener
 
         String input = (String) JOptionPane.showInputDialog(
                 null,
-                "What is this account's new user role?",
+                LanguageController.getString("newRole"),
                 "New user role",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -280,10 +309,10 @@ public class UserManager extends JPanel implements ActionListener
                     + " for user no. %s to %s", selectedId, result)).insert();
             
             loadUsers();
-            MiscUtil.showMessage("The user role has succesfully been changed!");
+            MiscUtil.showMessage(LanguageController.getString("roleChanged"));
         } else
         {
-            MiscUtil.showMessage("Input is not valid, try again.");
+            MiscUtil.showMessage(LanguageController.getString("inputInvalid"));
         }
     }
     
@@ -304,7 +333,7 @@ public class UserManager extends JPanel implements ActionListener
         if (StringUtil.isStringNullOrWhiteSpace(username)
                 || StringUtil.isStringNullOrWhiteSpace(password))
         {
-            MiscUtil.showMessage("The username and password can not be empty.");
+            MiscUtil.showMessage(LanguageController.getString("inputInvalid"));
             return;
         }
         
@@ -323,8 +352,9 @@ public class UserManager extends JPanel implements ActionListener
                 + " username " + username).insert();
         
         loadUsers();
-        MiscUtil.showMessage(String.format("Registering the account "
-                + "was%s succesful!", (result ? "" : " not")));
+        
+        MiscUtil.showMessage(LanguageController.getString(result
+                ? "registerSuccess" : "registerNoSuccess"));
     }
 
     /**

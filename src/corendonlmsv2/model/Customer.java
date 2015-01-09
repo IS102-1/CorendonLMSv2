@@ -1,6 +1,7 @@
 package corendonlmsv2.model;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.StringUtil;
 import java.sql.ResultSet;
@@ -219,8 +220,8 @@ public class Customer implements IStorable
     {
         if (isPhoneNumberRegistered(phoneNumber))
         {
-            throw new IllegalArgumentException("The phone number is already"
-                    + " registered to an existing customer.");
+            throw new IllegalArgumentException(
+                    LanguageController.getString("numberRegistered"));
         }
 
         return String.format("INSERT INTO %s (name, address, country, "

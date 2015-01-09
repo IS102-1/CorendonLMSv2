@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
@@ -47,6 +48,8 @@ public class LogViewer extends JPanel implements ActionListener
         loadUsers();
         
         registerListeners();
+        
+        backButton.setText(LanguageController.getString("back"));
     }
     
     /**
@@ -116,7 +119,7 @@ public class LogViewer extends JPanel implements ActionListener
         DefaultComboBoxModel comboBoxModel = (
                 DefaultComboBoxModel) filterComboBox.getModel();
         
-        comboBoxModel.addElement("All");
+        comboBoxModel.addElement(LanguageController.getString("all"));
         
         for (UserAccount user : users)
         {
@@ -146,7 +149,8 @@ public class LogViewer extends JPanel implements ActionListener
             
             //Load all logs if the selected item is "All". If not, load the
             //logs for the selected username
-            loadLogs(filterText.equals("All") ? null : filterText);
+            loadLogs(filterText.equals(LanguageController.getString("all")) 
+                    ? null : filterText);
         }
     }
 

@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.model.ActionLog;
@@ -42,19 +43,37 @@ public class CustomerManager
         
         this.parent = parent;
         initComponents();
-
+        
+        model = (NonEditableTableModel) customerTable.getModel();
+        sorter = new TableRowSorter<>(model);
+        customerTable.setRowSorter(sorter);
+        
+        loadCustomers();
+        registerListeners();
+        
+        setComponentProperties();
+    }
+    
+    /**
+     * Sets the components' properties
+     */
+    private void setComponentProperties()
+    {
         jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         refreshLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         refreshLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
-
-        model = (NonEditableTableModel) customerTable.getModel();
-        sorter = new TableRowSorter<>(model);
-        customerTable.setRowSorter(sorter);
-
-        loadCustomers();
-        registerListeners();
+        
+        backButton.setText(LanguageController.getString("back"));
+        registerCustomerButton.setText(
+                LanguageController.getString("registerCustomer"));
+        refreshLabel.setText(LanguageController.getString("refresh"));
+        jLabel1.setText(LanguageController.getString("modifySelected"));
+        registerLuggageButton.setText(
+                LanguageController.getString("registerLuggage"));
+        deleteButton.setText(LanguageController.getString("deleteCustomer"));
+        editButton.setText(LanguageController.getString("editCustomer"));
     }
     
     /**
@@ -84,7 +103,7 @@ public class CustomerManager
             sorter.setRowFilter(filter);    
         } catch (Exception ex)
         {
-            //Leave filter as it is
+            //Intentionally left blank
         }
     }
 
@@ -130,8 +149,7 @@ public class CustomerManager
 
         if (selectedRow == -1)
         {
-            MiscUtil.showMessage("Please select a valid customer before "
-                    + "proceeding.");
+            MiscUtil.showMessage(LanguageController.getString("selectCustomer"));
             return null;
         }
 
@@ -158,7 +176,7 @@ public class CustomerManager
             new ActionLog(UserAccount.getCurrent(), 
                 String.format("Deleted customer " + selectedId)).insert();
             
-            MiscUtil.showMessage("The selected customer has been deleted!");
+            MiscUtil.showMessage(LanguageController.getString("customerDeleted"));
             loadCustomers();
         }
     }

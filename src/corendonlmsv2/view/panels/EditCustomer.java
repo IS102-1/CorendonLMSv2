@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
@@ -66,8 +67,25 @@ public class EditCustomer
 
         loadExistingCustomer();
         registerListeners();
+        
+        setComponentProperties();
     }
-
+    
+    /**
+     * Sets the properties' properties
+     */
+    private void setComponentProperties()
+    {
+        jLabel1.setText(LanguageController.getString("name"));
+        jLabel2.setText(LanguageController.getString("address"));
+        jLabel3.setText(LanguageController.getString("country"));
+        jLabel4.setText(LanguageController.getString("emailAddress"));
+        jLabel5.setText(LanguageController.getString("phoneNumber"));
+        emailInvalidLabel.setText(LanguageController.getString("invalid"));
+        cancelButton.setText(LanguageController.getString("cancel"));
+        saveButton.setText(LanguageController.getString("save"));
+    }
+    
     /**
      * Registers event listeners
      */
@@ -138,8 +156,9 @@ public class EditCustomer
         new ActionLog(UserAccount.getCurrent(), 
                 "Registered customer " + nameInput).insert();
         
-        MiscUtil.showMessage(this, String.format("Registering the customer was"
-                + "%s succesful!", success ? "" : " not"));
+        MiscUtil.showMessage(this, LanguageController.getString(success 
+                ? "registerSuccess" 
+                : "registerNoSuccess"));
 
         //Hide frame
         setVisible(false);
@@ -168,8 +187,8 @@ public class EditCustomer
             new ActionLog(UserAccount.getCurrent(), 
                 "Edited customer " + customerId).insert();
             
-            MiscUtil.showMessage(this, 
-                    "Updated details for customer " + customerId);
+            MiscUtil.showMessage(this, String.format(
+                    LanguageController.getString("editedCustomer"), nameColumn));
             
             //Hide frame
             setVisible(false);

@@ -1,5 +1,7 @@
 package corendonlmsv2.view.panels;
 
+import corendonlmsv2.connectivity.LanguageController;
+import corendonlmsv2.connectivity.LanguageController.Languages;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.model.ActionLog;
@@ -10,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+
 
 /**
  *
@@ -31,6 +35,7 @@ public class Login extends JPanel implements ActionListener, MouseListener
         jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         jLabel3.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel4.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         forgotLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
         forgotLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
@@ -54,6 +59,9 @@ public class Login extends JPanel implements ActionListener, MouseListener
             UserRoles role = UserAccount.validateUserRole(username, password);
             UserAccount.setCurrent(new UserAccount(username, null, role, false));
             
+            LanguageController.setLanguage((Languages) 
+                        languageComboBox.getSelectedItem());
+            
             if (role != UserRoles.UNAUTHORIZED)
             {
                 new ActionLog(UserAccount.getCurrent(), "Signed in").insert();
@@ -75,10 +83,12 @@ public class Login extends JPanel implements ActionListener, MouseListener
                 }
                 
                 CorendonLMSv2.MAIN_FRAME.displayPanel(panel);
-                MiscUtil.showMessage("Signed in as " + UserAccount.getCurrent());
+                MiscUtil.showMessage(LanguageController.getString("signedInAs") 
+                        + UserAccount.getCurrent());
             } else
             {
-                MiscUtil.showMessage("The entered credentials are invalid.");
+                MiscUtil.showMessage(
+                        LanguageController.getString("incorrectCredentials"));
             }
         }
     }
@@ -88,8 +98,7 @@ public class Login extends JPanel implements ActionListener, MouseListener
     {
         if (me.getSource() == forgotLabel)
         {
-            MiscUtil.showMessage("Please contact your administrator if you have"
-                    + " forgotten your password.");
+            MiscUtil.showMessage(LanguageController.getString("forgotPassword"));
         }
     }
 
@@ -110,9 +119,11 @@ public class Login extends JPanel implements ActionListener, MouseListener
         passwordField = new javax.swing.JPasswordField();
         signInButton = new javax.swing.JButton();
         forgotLabel = new javax.swing.JLabel();
+        languageComboBox = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Welcome to CorendonLMSv2! Please sign in to get started.");
+        jLabel1.setText("Welcome! Please sign in to get started.");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Username:");
@@ -131,6 +142,10 @@ public class Login extends JPanel implements ActionListener, MouseListener
         forgotLabel.setForeground(new java.awt.Color(0, 0, 255));
         forgotLabel.setText("Forgot password?");
 
+        languageComboBox.setModel(new DefaultComboBoxModel(Languages.values()));
+
+        jLabel4.setText("Language:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,18 +158,26 @@ public class Login extends JPanel implements ActionListener, MouseListener
                     .addComponent(signInButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(forgotLabel))
-                        .addGap(0, 76, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(languageComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(languageComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -167,7 +190,7 @@ public class Login extends JPanel implements ActionListener, MouseListener
                 .addComponent(forgotLabel)
                 .addGap(18, 18, 18)
                 .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,6 +199,8 @@ public class Login extends JPanel implements ActionListener, MouseListener
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox languageComboBox;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton signInButton;
     private javax.swing.JTextField usernameField;

@@ -144,7 +144,7 @@ public class UserAccount implements IStorable
         
         
         //Hash the candidate password for comparison
-        UserRoles role = UserRoles.MANAGER;
+        UserRoles role = UserRoles.UNAUTHORIZED;// UserRoles.MANAGER;
 
         try
         {

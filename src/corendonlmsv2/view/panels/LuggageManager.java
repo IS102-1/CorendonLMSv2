@@ -1,6 +1,7 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.main.util.PdfUtil;
@@ -45,19 +46,33 @@ public class LuggageManager
 
         this.parent = parent;
         initComponents();
-
-        jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        refreshLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        refreshLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
-
+        
         model = (NonEditableTableModel) luggageTable.getModel();
         sorter = new TableRowSorter<>(model);
         luggageTable.setRowSorter(sorter);
 
         loadLuggage();
         registerListeners();
+        setComponentProperties();
+    }
+    
+    private void setComponentProperties()
+    {
+        jLabel1.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        jLabel2.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
+        refreshLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
+        
+        refreshLabel.setText(LanguageController.getString("refresh"));
+        backButton.setText(LanguageController.getString("back"));
+        jLabel1.setText(LanguageController.getString("search"));
+        jLabel2.setText(LanguageController.getString("modifySelected"));
+        generatePdfButton.setText(LanguageController.getString("generatePdf"));
+        deleteButton.setText(LanguageController.getString("deleteLuggage"));
+        editButton.setText(LanguageController.getString("editLuggage"));
+        detailsButton.setText(LanguageController.getString("viewDetails"));
+        registerButton.setText(LanguageController.getString("registerNewLuggage"));
     }
 
     /**
@@ -133,8 +148,7 @@ public class LuggageManager
 
         if (selectedRow == -1)
         {
-            MiscUtil.showMessage("Please select a valid luggage entry before "
-                    + "proceeding.");
+            MiscUtil.showMessage(LanguageController.getString("selectLuggage"));
             return null;
         }
 
@@ -158,7 +172,8 @@ public class LuggageManager
             new ActionLog(UserAccount.getCurrent(),
                     "Deleted luggage " + selectedId).insert();
 
-            MiscUtil.showMessage("The selected luggage has been deleted!");
+            MiscUtil.showMessage(
+                    LanguageController.getString("selectedLuggageDeleted"));
             loadLuggage();
         }
     }
@@ -203,8 +218,9 @@ public class LuggageManager
                     result = PdfUtil.generatePdf(selectedId);
                 } catch (IOException ex)
                 {
-                    MiscUtil.showMessage("PDF could not be generated.\n\n" 
-                            + ex.getMessage());
+                    MiscUtil.showMessage(
+                            LanguageController.getString("pdfGenFailed") 
+                                    + "\n\n" + ex.getMessage());
                     return;
                 }
                 
@@ -214,9 +230,8 @@ public class LuggageManager
             }
         } else if (source == registerButton)
         {
-            int result = JOptionPane.showConfirmDialog(this, "Would you like to"
-                    + " add luggage to a customer's record?\nPress no if the"
-                    + " luggage's owner is unknown.");
+            int result = JOptionPane.showConfirmDialog(this, 
+                    LanguageController.getString("addToExisting"));
             
             if (result == JOptionPane.YES_OPTION)
             {

@@ -1,23 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package corendonlmsv2.view.panels;
 
-import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
-import corendonlmsv2.model.Customer;
-import static corendonlmsv2.model.Customer.TABLE;
-import corendonlmsv2.model.Luggage;
-import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.UserAccount;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -43,8 +32,12 @@ public class ManagerHub extends JPanel implements ActionListener
         setBackground(CorendonLMSv2.DEFAULT_BACKCOLOR);
 
         welcomeLabel.setForeground(CorendonLMSv2.DEFAULT_FORECOLOR);
-        welcomeLabel.setText(String.format("Welcome back, %s! What would you"
-                + " like to do?", UserAccount.getCurrent()));
+        welcomeLabel.setText(String.format(LanguageController.getString(
+                "welcomeBack"), UserAccount.getCurrent()));
+
+        signOutButton.setText(LanguageController.getString("signOut"));
+        logsButton.setText(LanguageController.getString("viewLogs"));
+        graphsButton.setText(LanguageController.getString("graph"));
 
         registerListeners();
     }
@@ -161,8 +154,6 @@ public class ManagerHub extends JPanel implements ActionListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void graphsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphsButtonActionPerformed
-
-        
        DefaultPieDataset pieDataset = new DefaultPieDataset();
        pieDataset.setValue("Normal", new Integer(10));
        pieDataset.setValue("Found", new Integer(20));
@@ -174,10 +165,7 @@ public class ManagerHub extends JPanel implements ActionListener
        ChartFrame frame = new ChartFrame("Luggage", chart);
        frame.setSize(800, 500);
        frame.setLocationRelativeTo(null);
-       frame.setVisible(true);
-       
-       
-       
+       frame.setVisible(true);       
     }//GEN-LAST:event_graphsButtonActionPerformed
 
 
