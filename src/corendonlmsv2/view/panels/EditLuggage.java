@@ -1,10 +1,10 @@
 package corendonlmsv2.view.panels;
 
 import corendonlmsv2.connectivity.DbManager;
+import corendonlmsv2.connectivity.LanguageController;
 import corendonlmsv2.main.util.DateUtil;
 import corendonlmsv2.main.util.MiscUtil;
 import corendonlmsv2.model.ActionLog;
-import corendonlmsv2.model.Customer;
 import corendonlmsv2.model.DatabaseTables;
 import corendonlmsv2.model.Luggage;
 import corendonlmsv2.model.Luggage.LuggageStatuses;
@@ -38,11 +38,11 @@ public class EditLuggage extends JFrame implements ActionListener
                     Luggage.TableColumns.LOCATION),
             statusColumn = Luggage.TABLE.getColumnAt(
                     Luggage.TableColumns.STATUS),
-            dateMissingColumn = Luggage.TABLE.getColumnAt(
-                    Luggage.TableColumns.DATE_MISSING);
+            dateEnteredColumn = Luggage.TABLE.getColumnAt(
+                    Luggage.TableColumns.DATE_ENTERED);
     
     private String brandInput, colorInput, 
-            detailsInput, locationInput, dateMissingInput;
+            detailsInput, locationInput, dateEnteredInput;
 
     private LuggageStatuses initialStatus, newStatus;
 
@@ -74,15 +74,32 @@ public class EditLuggage extends JFrame implements ActionListener
         this.isExistingEntry = isExistingEntry;
 
         initComponents();
-
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setAlwaysOnTop(true);
-
+        
         customerIdField.setEditable(false);
         
         loadExistingLuggage();
         registerListeners();
+        
+        setComponentProperties();
+    }
+    
+    /**
+     * Sets the components' properties
+     */
+    private void setComponentProperties()
+    {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setAlwaysOnTop(true);
+        
+        jLabel1.setText(LanguageController.getString("customerId"));
+        jLabel2.setText(LanguageController.getString("brandName"));
+        jLabel3.setText(LanguageController.getString("color"));
+        jLabel4.setText(LanguageController.getString("location"));
+        jLabel5.setText(LanguageController.getString("status"));
+        jLabel6.setText(LanguageController.getString("details"));
+        cancelButton.setText(LanguageController.getString("cancel"));
+        saveButton.setText(LanguageController.getString("save"));
     }
 
     private void registerListeners()
@@ -129,23 +146,13 @@ public class EditLuggage extends JFrame implements ActionListener
     private void editExisting()
     {
         String update = String.format("UPDATE %s SET %s='%s', %s='%s',"
-                + " %s='%s', %s='%s', %s='%s'%s WHERE %s=%s",
+                + " %s='%s', %s='%s', %s='%s' WHERE %s=%s",
                 Luggage.TABLE.getDatabaseIdentifier(),
                 brandColumn, brandInput,
                 colorColumn, colorInput,
                 detailsColumn, detailsInput,
                 locationColumn, locationInput,
                 statusColumn, newStatus.getDatabaseIdentifier(),
-                
-                //If the status was changed from *anything* to MISSING just now,
-                //set the date_missing column to today's date. If not, don't
-                //set it at all
-                (initialStatus != LuggageStatuses.MISSING 
-                        && newStatus == LuggageStatuses.MISSING)
-                        ? String.format(", %s='%s'", dateMissingColumn, 
-                                DateUtil.getDateString()) 
-                        : "",
-                
                 Luggage.TABLE.getColumnAt(Luggage.TableColumns.LUGGAGE_ID), id
         );
         
@@ -168,10 +175,7 @@ public class EditLuggage extends JFrame implements ActionListener
             Luggage luggage = new Luggage(brandInput, colorInput, id, 
                     detailsInput, locationInput, newStatus);
             
-            if (newStatus == LuggageStatuses.MISSING)
-            {
-                luggage.setDateMissing(DateUtil.getDateString());
-            }
+            luggage.setDateEntered(DateUtil.getDateString());
             
             success = luggage.insert();
             

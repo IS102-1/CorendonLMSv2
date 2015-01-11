@@ -37,7 +37,7 @@ public class DateUtil
      */
     public static String getDateString()
     {
-        return DATE_FORMAT.format(now());
+        return new SimpleDateFormat("yyyy/MM/dd").format(now());
     }
     
     /**

@@ -5,9 +5,11 @@ import corendonlmsv2.main.CorendonLMSv2;
 import corendonlmsv2.main.util.StringUtil;
 import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -69,7 +71,13 @@ public class ManagerHub extends JPanel implements ActionListener
             panel = new LogViewer(this);
         } else if (source == graphsButton)
         {
-            //TODO
+            JFrame inputFrame = new JFrame("Graph");
+            inputFrame.setMinimumSize(new Dimension(300, 250));
+            inputFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            inputFrame.getContentPane().add(new DateRangeInput(this));
+            inputFrame.setLocationRelativeTo(this);
+            inputFrame.setVisible(true);
+            
             return;
         } else
         {
@@ -154,18 +162,7 @@ public class ManagerHub extends JPanel implements ActionListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void graphsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphsButtonActionPerformed
-       DefaultPieDataset pieDataset = new DefaultPieDataset();
-       pieDataset.setValue("Normal", new Integer(10));
-       pieDataset.setValue("Found", new Integer(20));
-       pieDataset.setValue("Missing", new Integer(30));
-       pieDataset.setValue("Resolved", new Integer(40));
-       JFreeChart chart = ChartFactory.createPieChart3D("Luggage", pieDataset, true, true, true);
-       
-       PiePlot3D p = (PiePlot3D)chart.getPlot();
-       ChartFrame frame = new ChartFrame("Luggage", chart);
-       frame.setSize(800, 500);
-       frame.setLocationRelativeTo(null);
-       frame.setVisible(true);       
+        
     }//GEN-LAST:event_graphsButtonActionPerformed
 
 

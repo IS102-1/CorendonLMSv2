@@ -126,7 +126,7 @@ public class LuggageManager
                 luggage.getDetails(),
                 luggage.getLocation(),
                 luggage.getStatus(),
-                luggage.getDateMissing()
+                luggage.getDateEntered()
             });
         }
     }

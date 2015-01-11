@@ -23,7 +23,7 @@ public class Luggage implements IStorable
             details, location;
     private final LuggageStatuses status;
 
-    private String luggageId, dateMissing;
+    private String luggageId, dateEntered;
 
     /**
      * Initializes a new object of luggage
@@ -64,7 +64,7 @@ public class Luggage implements IStorable
                 detailsColumn = TABLE.getColumnAt(TableColumns.DETAILS),
                 locationColumn = TABLE.getColumnAt(TableColumns.LOCATION),
                 statusColumn = TABLE.getColumnAt(TableColumns.STATUS),
-                dateMissingColumn = TABLE.getColumnAt(TableColumns.DATE_MISSING);
+                dateEnteredColumn = TABLE.getColumnAt(TableColumns.DATE_ENTERED);
 
         try
         {
@@ -80,7 +80,7 @@ public class Luggage implements IStorable
                                 results.getString(statusColumn).toUpperCase())
                 );
                 luggage.setLuggageId(results.getString(luggageIdColumn));
-                luggage.setDateMissing(results.getString(dateMissingColumn));
+                luggage.setDateEntered(results.getString(dateEnteredColumn));
 
                 allLuggage.add(luggage);
             }
@@ -123,13 +123,13 @@ public class Luggage implements IStorable
     }
 
     /**
-     * Get the value of dateMissing
+     * Get the value of dateEntered
      *
-     * @return the value of dateMissing
+     * @return the value of dateEntered
      */
-    public String getDateMissing()
+    public String getDateEntered()
     {
-        return dateMissing;
+        return dateEntered;
     }
 
     /**
@@ -173,13 +173,13 @@ public class Luggage implements IStorable
     }
 
     /**
-     * Sets the value of dateMissing
+     * Sets the value of dateEntered
      *
-     * @param dateMissing new value for dateMissing
+     * @param dateEntered new value for dateEntered
      */
-    public void setDateMissing(String dateMissing)
+    public void setDateEntered(String dateEntered)
     {
-        this.dateMissing = dateMissing;
+        this.dateEntered = dateEntered;
     }
 
     /**
@@ -208,10 +208,10 @@ public class Luggage implements IStorable
 //        }
 
         return String.format("INSERT INTO %s (brand_name, color, customer_id,"
-                + " details, location, status, date_missing) VALUES "
+                + " details, location, status, date_entered) VALUES "
                 + "('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 TABLE.getDatabaseIdentifier(), brandName, color, customerId,
-                details, location, status, dateMissing);
+                details, location, status, dateEntered);
     }
 
     @Override
@@ -304,8 +304,8 @@ public class Luggage implements IStorable
         public static final int STATUS = 6;
 
         /**
-         * Index for the column date_missing
+         * Index for the column date_entered
          */
-        public static final int DATE_MISSING = 7;
+        public static final int DATE_ENTERED = 7;
     }
 }

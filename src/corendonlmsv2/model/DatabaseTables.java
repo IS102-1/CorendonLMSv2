@@ -43,7 +43,7 @@ public enum DatabaseTables
         "details",
         "location",
         "status",
-        "date_missing"
+        "date_entered"
     }),
     /**
      * Database table to store users (of UserAccount) in
