@@ -28,11 +28,13 @@ public class GraphUtil
     private static int getLuggageForMonth(
             LuggageStatuses status, int month, int year)
     {
-        final String query = String.format("SELECT COUNT(*) AS count "
+        final String query = String.format(
+                  "SELECT COUNT(*) AS count "
                 + "FROM luggage "
                 + "WHERE status = '%s' "
-                + "AND MONTH(date_entered) = %d;", 
-                status.getDatabaseIdentifier(), month);
+                + "AND MONTH(date_entered) = %d "
+                + "AND YEAR(date_entered) = %d;", 
+                status.getDatabaseIdentifier(), month, year);
         
         final ResultSet results = DbManager.executeQuery(query);
         
@@ -66,21 +68,26 @@ public class GraphUtil
     {
         final DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         
-        for (int year = fromYear; year <= toYear; ++year)
+        int year = fromYear, month = fromMonth.getMonthIndex();
+        
+        do
         {
-            for (int month = fromMonth.getMonthIndex(); 
-                    month <= toMonth.getMonthIndex(); 
-                    ++month)
+            for (LuggageStatuses status : LuggageStatuses.values())
             {
-                for (LuggageStatuses status : LuggageStatuses.values())
-                {
-                    int nLuggage = getLuggageForMonth(status, month, year);
-                    
-                    dataSet.addValue(nLuggage, status, 
-                            Months.parse(month) + " " + year);
-                }
+                int nLuggage = getLuggageForMonth(status, month, year);
+
+                dataSet.addValue(nLuggage, status, 
+                        Months.parse(month) + " " + year);
             }
-        }
+            
+            //If the month equals 13 after incrementing it,
+            //set the month to 1 and increment the year
+            if (++month == 13)
+            {
+                month = 1;
+                ++year;
+            }
+        } while (!(year == toYear && month == toMonth.getMonthIndex() + 1));
         
         //JFreeChart chart = ChartFactory.createLineChart("Luggage statuses", 
         //        "Month", "Amount", dataSet);
