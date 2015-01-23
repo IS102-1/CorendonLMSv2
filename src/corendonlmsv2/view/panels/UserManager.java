@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Emile Pels
+ * @author Marko Pals
  */
 public class UserManager extends JPanel implements ActionListener
 {
@@ -331,7 +331,8 @@ public class UserManager extends JPanel implements ActionListener
         passwordRepeatField.setText("");
         
         if (StringUtil.isStringNullOrWhiteSpace(username)
-                || StringUtil.isStringNullOrWhiteSpace(password))
+                || StringUtil.isStringNullOrWhiteSpace(password)
+                || password.length() < 4)
         {
             MiscUtil.showMessage(LanguageController.getString("inputInvalid"));
             return;

@@ -53,7 +53,7 @@ public class CorendonLMSv2
      * Indicates whether errors should be written to a file rather than the
      * standard error stream
      */
-    public static final boolean ERRORS_TO_FILE = false;
+    public static final boolean ERRORS_TO_FILE = true;
 
     /**
      * Application's look and feel
@@ -74,15 +74,12 @@ public class CorendonLMSv2
         {
             setErrorStream(ERROR_LOG_FILENAME);
         }
-        
+
         System.out.println("Starting " + APPLICATION_NAME);
 
         MiscUtil.setLookAndFeel(LOOK_AND_FEEL);
-
         DbManager.connect();
 
-        insertAdminAccount();
-        
         SwingUtilities.invokeLater(new Runnable()
         {
             @Override
@@ -90,10 +87,7 @@ public class CorendonLMSv2
             {
                 MAIN_FRAME.displayPanel(new Login());
             }
-            
         });
-        
-        
     }
 
     /**
@@ -105,7 +99,7 @@ public class CorendonLMSv2
         final String username = "admin", password = "admin";
         final UserRoles role = UserRoles.ADMIN;
 
-        if (!   UserAccount.isUsernameRegistered(username))
+        if (!UserAccount.isUsernameRegistered(username))
         {
             new UserAccount(username, password, role, true).insert();
         }
@@ -139,14 +133,14 @@ public class CorendonLMSv2
                 public void run()
                 {
                     UserAccount currentUser = UserAccount.getCurrent();
-                    
+
                     if (currentUser != null)
                     {
                         //Someone was logged in and closed the application:
                         //write a log to the database
                         new ActionLog(currentUser, "Signed out").insert();
                     }
-                    
+
                     try
                     {
                         //Flush and close all streams
@@ -155,7 +149,7 @@ public class CorendonLMSv2
 
                         fileStream.close();
                         errStream.close();
-                        
+
                         //Close the connection to the database
                         DbManager.close();
                     } catch (IOException ex)

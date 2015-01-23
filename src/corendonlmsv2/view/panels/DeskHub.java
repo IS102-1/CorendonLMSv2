@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Emile
+ * @author Brecht Dogge
  */
 public class DeskHub extends JPanel implements ActionListener
 {

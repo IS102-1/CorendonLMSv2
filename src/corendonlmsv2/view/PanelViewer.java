@@ -96,16 +96,4 @@ public class PanelViewer extends JFrame
             setVisible(true);
         }
     }
-
-    private JPanel getDummyPanel()
-    {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(CorendonLMSv2.DEFAULT_SIZE.width, 100));
-
-        panel.add(new JButton("123"));
-        panel.add(new JButton("456"));
-        panel.add(new JButton("789"));
-
-        return panel;
-    }
 }

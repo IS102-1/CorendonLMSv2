@@ -8,21 +8,31 @@ import corendonlmsv2.model.ActionLog;
 import corendonlmsv2.model.UserAccount;
 import corendonlmsv2.model.UserAccount.UserRoles;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 
 
 /**
+ * Asks the user for their credentials and signs them in if correct
  *
- * @author Emile
+ * @author Sjoerd Banen
  */
 public class Login extends JPanel implements ActionListener, MouseListener
 {
 
+    /**
+     * Contains the file name to be opened upon clicking the help button,
+     * which provides help
+     */
+    private static final String HELP_FILENAME = "Usermanual.pdf";
+    
     /**
      * Creates new form Login
      */
@@ -46,12 +56,15 @@ public class Login extends JPanel implements ActionListener, MouseListener
     {
         forgotLabel.addMouseListener(this);
         signInButton.addActionListener(this);
+        helpButton.addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        if (ae.getSource() == signInButton)
+        final Object source = ae.getSource();
+        
+        if (source == signInButton)
         {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
@@ -90,6 +103,16 @@ public class Login extends JPanel implements ActionListener, MouseListener
                 MiscUtil.showMessage(
                         LanguageController.getString("incorrectCredentials"));
             }
+        } else if (source == helpButton)
+        {
+            try
+            {
+                Desktop.getDesktop().open(new File(HELP_FILENAME));
+            } catch (IOException ex)
+            {
+                MiscUtil.showMessage(this, "Documentation could not be "
+                        + "found.\n\n" + ex.getMessage());
+            }
         }
     }
 
@@ -121,6 +144,7 @@ public class Login extends JPanel implements ActionListener, MouseListener
         forgotLabel = new javax.swing.JLabel();
         languageComboBox = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
+        helpButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Welcome! Please sign in to get started.");
@@ -146,6 +170,8 @@ public class Login extends JPanel implements ActionListener, MouseListener
 
         jLabel4.setText("Language:");
 
+        helpButton.setText("Help");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,7 +193,10 @@ public class Login extends JPanel implements ActionListener, MouseListener
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(languageComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(languageComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -190,12 +219,15 @@ public class Login extends JPanel implements ActionListener, MouseListener
                 .addComponent(forgotLabel)
                 .addGap(18, 18, 18)
                 .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addComponent(helpButton)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel forgotLabel;
+    private javax.swing.JButton helpButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

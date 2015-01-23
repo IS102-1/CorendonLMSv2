@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Emile Pels
+ * @author Brecht Dogge
  */
 public class AdminHub extends JPanel implements ActionListener
 {

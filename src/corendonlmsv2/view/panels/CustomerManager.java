@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Emile Pels
+ * @author Daan Bol
  */
 public class CustomerManager
         extends JPanel implements ActionListener, DocumentListener

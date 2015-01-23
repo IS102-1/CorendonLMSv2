@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Emile Pels
+ * @author Jeroen Schoemaker
  */
 public class LogViewer extends JPanel implements ActionListener
 {

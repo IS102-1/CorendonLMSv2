@@ -11,15 +11,10 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot3D;
-import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
- * @author Emile Pels
+ * @author Brecht Dogge
  */
 public class ManagerHub extends JPanel implements ActionListener
 {

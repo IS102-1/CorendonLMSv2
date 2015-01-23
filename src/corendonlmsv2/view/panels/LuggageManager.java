@@ -24,7 +24,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Emile Pels
+ * @author Stijn Veken
  */
 public class LuggageManager
         extends JPanel implements ActionListener, DocumentListener
